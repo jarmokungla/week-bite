@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #FFFFFF;
+  --text: #0F172A;
+  --primary: #16A34A;
+  --primaryDark: #15803D;
+  --accent: #0EA5E9;
+  --muted: #64748B;
+  --ring: rgba(22,163,74,0.25);
+}
+
+html, body, #__next { height: 100%; }
+body { background: var(--bg); color: var(--text); }
