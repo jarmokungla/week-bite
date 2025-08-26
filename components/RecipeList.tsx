@@ -15,7 +15,9 @@ export default function RecipeList({ recipes }:{ recipes: Recipe[] }) {
         <div key={r.id} className="border border-primary/25 bg-surface rounded-2xl overflow-hidden">
           {r.image_url ? <img src={r.image_url} alt="" className="w-full h-40 object-cover" /> : <div className="h-40 bg-surface" />}
           <div className="p-3">
-            <div className="font-medium mb-2 text-headline">{r.title}</div>
+            <Link href={`/recipes/${r.id}`} className="font-medium mb-2 text-headline block hover:underline">
+              {r.title}
+            </Link>
             <div className="flex flex-wrap gap-2">
               <form action={addIngredientsToShoppingList.bind(null, r.id)}>
                 <button className="text-sm px-3 py-1 border border-primary/25 rounded-xl bg-surface">Add to shopping list</button>
