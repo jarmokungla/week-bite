@@ -1,10 +1,11 @@
 import './globals.css'
 import Link from 'next/link'
+import Image from 'next/image'
 import { supabaseServer } from '@/lib/supabaseServer'
 import { redirect } from 'next/navigation'
 
 export const metadata = {
-  title: 'Recipe Planner',
+  title: 'Week Bite',
   description: 'Recipes • Shopping • Weekly Menu',
 }
 
@@ -13,7 +14,7 @@ async function UserMenu() {
   const { data } = await supabase.auth.getUser();
   const user = data.user;
   if (!user) {
-    return <Link href="/login" className="text-sm px-3 py-1 rounded bg-primary text-headline">Log in</Link>
+    return <Link href="/login" className="px-4 py-2 rounded-full bg-accent text-headline text-sm">Log in</Link>
   }
   async function signOut() {
     'use server'
@@ -23,7 +24,7 @@ async function UserMenu() {
   }
   return (
     <form action={signOut}>
-      <button className="text-sm px-3 py-1 rounded bg-primaryDark text-headline">Sign out</button>
+      <button className="text-sm px-4 py-2 rounded-full bg-accent text-headline">Sign out</button>
     </form>
   )
 }
@@ -33,15 +34,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen bg-bg text-text">
         <header className="border-b border-primary/25 bg-surface sticky top-0 z-10">
-          <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between text-headline">
-            <Link href="/" className="font-semibold text-lg text-headline">🥗 Recipe Planner</Link>
-            <nav className="flex items-center gap-3 text-sm">
-              <Link href="/recipes" className="hover:text-primary">Recipes</Link>
-              <Link href="/shopping" className="hover:text-primary">Shopping</Link>
-              <Link href="/menu" className="hover:text-primary">Weekly Menu</Link>
-              <Link href="/friends" className="hover:text-primary">Friends</Link>
+          <div className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4 text-headline">
+            <Link href="/" className="flex items-center">
+              <Image src="/logo.svg" alt="Week Bite" width={120} height={40} priority />
+            </Link>
+            <nav className="w-full sm:w-auto flex flex-wrap justify-center gap-2 text-sm">
+              <Link href="/recipes" className="px-4 py-2 rounded-full bg-primary text-headline hover:bg-primaryDark">Recipes</Link>
+              <Link href="/shopping" className="px-4 py-2 rounded-full bg-primary text-headline hover:bg-primaryDark">Shopping</Link>
+              <Link href="/menu" className="px-4 py-2 rounded-full bg-primary text-headline hover:bg-primaryDark">Weekly Menu</Link>
+              <Link href="/friends" className="px-4 py-2 rounded-full bg-primary text-headline hover:bg-primaryDark">Friends</Link>
             </nav>
-            <UserMenu />
+            <div className="flex sm:ml-auto">
+              <UserMenu />
+            </div>
           </div>
         </header>
         <main className="max-w-5xl mx-auto px-4 py-6">{children}</main>
