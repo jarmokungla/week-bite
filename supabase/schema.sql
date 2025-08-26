@@ -64,6 +64,7 @@ create table if not exists public.recipes (
   title text not null,
   directions text,
   image_url text,
+  tags text[] default '{}',
   created_at timestamp with time zone default now(),
   updated_at timestamp with time zone default now()
 );
@@ -217,7 +218,8 @@ join public.profiles p2 on p2.id = f.friend_id
 where f.user_id = auth.uid() or f.friend_id = auth.uid();
 
 -- View combining own + shared recipes for easy listing
-create or replace view public.recipes_with_access as
+drop view if exists public.recipes_with_access;
+create view public.recipes_with_access as
 select r.*
 from public.recipes r
 where r.owner_id = auth.uid()
