@@ -24,6 +24,7 @@ export async function createRecipe(data: RecipeInput) {
       directions: data.directions ?? null,
       image_url: data.image_url ?? null,
       book_id: data.book_id ?? null,
+      tags: data.tags ?? [],
     })
     .select()
     .single();

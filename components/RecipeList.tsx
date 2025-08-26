@@ -6,6 +6,7 @@ type Recipe = {
   id: string;
   title: string;
   image_url: string | null;
+  tags?: string[] | null;
 };
 
 export default function RecipeList({ recipes }:{ recipes: Recipe[] }) {
@@ -18,6 +19,13 @@ export default function RecipeList({ recipes }:{ recipes: Recipe[] }) {
             <Link href={`/recipes/${r.id}`} className="font-medium mb-2 text-headline block hover:underline">
               {r.title}
             </Link>
+            {r.tags && r.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-2">
+                {r.tags.map(t => (
+                  <span key={t} className="text-xs px-2 py-0.5 bg-primary/10 rounded-full text-headline">{t}</span>
+                ))}
+              </div>
+            )}
             <div className="flex flex-wrap gap-2">
               <form action={addIngredientsToShoppingList.bind(null, r.id)}>
                 <button className="text-sm px-3 py-1 border border-primary/25 rounded-xl bg-surface">Add to shopping list</button>
