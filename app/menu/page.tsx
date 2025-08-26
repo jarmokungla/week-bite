@@ -37,21 +37,21 @@ export default async function MenuPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Next Week&apos;s Menu</h1>
+      <h1 className="text-xl font-semibold text-headline">Next Week&apos;s Menu</h1>
       <div className="grid md:grid-cols-3 gap-4">
         {[1,2,3,4,5,6,7].map(d => {
           const date = dateForNextWeekDay(d);
           const key = date.toISOString().slice(0,10);
           const dayItems = map.get(key) ?? [];
           return (
-            <div key={d} className="border rounded-2xl p-3">
-              <div className="font-medium mb-2">{weekdayNames[d]} <span className="text-muted text-xs">({key})</span></div>
+            <div key={d} className="border border-primary/25 bg-surface rounded-2xl p-3">
+              <div className="font-medium mb-2 text-headline">{weekdayNames[d]} <span className="text-muted text-xs">({key})</span></div>
               <div className="space-y-2">
                 {dayItems.length === 0 && <p className="text-sm text-muted">No recipes yet. Add from the Recipes page.</p>}
                 {dayItems.map((item: any) => (
                   <div key={item.id} className="flex items-center gap-2">
-                    {item.recipes?.image_url ? <img src={item.recipes.image_url} className="h-10 w-10 rounded object-cover border" /> : <div className="h-10 w-10 rounded bg-gray-100" />}
-                    <div>{item.recipes?.title ?? 'Untitled'}</div>
+                    {item.recipes?.image_url ? <img src={item.recipes.image_url} className="h-10 w-10 rounded object-cover border border-primary/25" /> : <div className="h-10 w-10 rounded bg-surface border border-primary/25" />}
+                    <div className="text-headline">{item.recipes?.title ?? 'Untitled'}</div>
                   </div>
                 ))}
               </div>

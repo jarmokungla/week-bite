@@ -3,14 +3,31 @@
 @tailwind utilities;
 
 :root {
-  --bg: #FFFFFF;
-  --text: #0F172A;
-  --primary: #16A34A;
-  --primaryDark: #15803D;
-  --accent: #0EA5E9;
-  --muted: #64748B;
-  --ring: rgba(22,163,74,0.25);
+  --bg: #0B1220;
+  --surface: #0F172A;
+  --text: #C7EDE3;
+  --headline: #ECFEFF;
+  --primary: #10B981;
+  --primaryDark: #0F766E;
+  --accent: #38BDF8;
+  --muted: #94A3B8;
+  --ring: rgba(16,185,129,0.25);
+  --success: #22C55E;
 }
 
 html, body, #__next { height: 100%; }
 body { background: var(--bg); color: var(--text); }
+
+h1, h2, h3 {
+  color: var(--headline);
+}
+
+input, textarea, select {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--ring);
+}
+
+button {
+  color: var(--headline);
+}

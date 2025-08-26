@@ -19,7 +19,7 @@ export default async function RecipesPage() {
     <div className="space-y-6">
       <RecipeForm />
       <div>
-        <h2 className="font-semibold text-lg mb-2">Your Recipes</h2>
+        <h2 className="font-semibold text-lg mb-2 text-headline">Your Recipes</h2>
         <RecipeList recipes={(recipes ?? []).map(r => ({ id: r.id, title: r.title, image_url: r.image_url }))} />
       </div>
     </div>

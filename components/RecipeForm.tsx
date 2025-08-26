@@ -23,30 +23,30 @@ export default function RecipeForm({ bookId }: { bookId?: string | null }) {
     setTitle(''); setDirections(''); setImageUrl(null); setIngredients([{ name: '' }]);
   }
 
-  return (
-    <form onSubmit={onSubmit} className="p-4 border rounded-2xl space-y-3">
-      <h3 className="font-medium">New Recipe</h3>
-      <input className="w-full border rounded-xl px-3 py-2" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} required />
-      <textarea className="w-full border rounded-xl px-3 py-2" placeholder="Directions" rows={4} value={directions} onChange={e => setDirections(e.target.value)} />
-      <div className="flex items-center gap-3">
-        <UploadImage onUploaded={setImageUrl} />
-        {imageUrl && <img src={imageUrl} alt="preview" className="h-16 w-16 rounded object-cover border" />}
-      </div>
-      <div>
-        <p className="text-sm font-medium mb-1">Ingredients</p>
-        <div className="space-y-2">
-          {ingredients.map((ing, i) => (
-            <div key={i} className="grid grid-cols-12 gap-2">
-              <input className="col-span-6 border rounded-xl px-3 py-2" placeholder="Name" value={ing.name} onChange={e => updateIng(i,'name',e.target.value)} />
-              <input className="col-span-3 border rounded-xl px-3 py-2" placeholder="Qty" value={ing.quantity ?? ''} onChange={e => updateIng(i,'quantity',e.target.value)} />
-              <input className="col-span-2 border rounded-xl px-3 py-2" placeholder="Unit" value={ing.unit ?? ''} onChange={e => updateIng(i,'unit',e.target.value)} />
-              <button type="button" onClick={() => removeIng(i)} className="col-span-1 text-sm text-red-600">✕</button>
-            </div>
-          ))}
-          <button type="button" onClick={addIng} className="text-sm text-primary">+ Add ingredient</button>
+    return (
+      <form onSubmit={onSubmit} className="p-4 border border-primary/25 bg-surface rounded-2xl space-y-3">
+        <h3 className="font-medium text-headline">New Recipe</h3>
+        <input className="w-full border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} required />
+        <textarea className="w-full border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="Directions" rows={4} value={directions} onChange={e => setDirections(e.target.value)} />
+        <div className="flex items-center gap-3">
+          <UploadImage onUploaded={setImageUrl} />
+          {imageUrl && <img src={imageUrl} alt="preview" className="h-16 w-16 rounded object-cover border border-primary/25" />}
         </div>
-      </div>
-      <button className="px-4 py-2 rounded-xl bg-primary text-white">Save Recipe</button>
-    </form>
-  )
-}
+        <div>
+          <p className="text-sm font-medium mb-1 text-headline">Ingredients</p>
+          <div className="space-y-2">
+            {ingredients.map((ing, i) => (
+              <div key={i} className="grid grid-cols-12 gap-2">
+                <input className="col-span-6 border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="Name" value={ing.name} onChange={e => updateIng(i,'name',e.target.value)} />
+                <input className="col-span-3 border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="Qty" value={ing.quantity ?? ''} onChange={e => updateIng(i,'quantity',e.target.value)} />
+                <input className="col-span-2 border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="Unit" value={ing.unit ?? ''} onChange={e => updateIng(i,'unit',e.target.value)} />
+                <button type="button" onClick={() => removeIng(i)} className="col-span-1 text-sm text-red-600">✕</button>
+              </div>
+            ))}
+            <button type="button" onClick={addIng} className="text-sm text-primary">+ Add ingredient</button>
+          </div>
+        </div>
+        <button className="px-4 py-2 rounded-xl bg-primary text-headline">Save Recipe</button>
+      </form>
+    )
+  }

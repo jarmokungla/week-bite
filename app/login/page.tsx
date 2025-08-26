@@ -35,28 +35,28 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="text-2xl font-semibold mb-4">Login with phone</h1>
+    <div className="max-w-md mx-auto p-6 border border-primary/25 bg-surface rounded-2xl">
+      <h1 className="text-2xl font-semibold mb-4 text-headline">Login with phone</h1>
       {step === 'phone' && (
         <form onSubmit={sendCode} className="space-y-3">
           <input
-            className="w-full border rounded-xl px-3 py-2"
+            className="w-full border border-primary/25 rounded-xl px-3 py-2"
             placeholder="+3725123456"
             value={phone}
             onChange={e => setPhone(e.target.value)}
           />
-          <button className="px-4 py-2 rounded-xl bg-primary text-white">Send code</button>
+          <button className="px-4 py-2 rounded-xl bg-primary text-headline">Send code</button>
         </form>
       )}
       {step === 'code' && (
         <form onSubmit={verify} className="space-y-3">
           <input
-            className="w-full border rounded-xl px-3 py-2"
+            className="w-full border border-primary/25 rounded-xl px-3 py-2"
             placeholder="6-digit code"
             value={code}
             onChange={e => setCode(e.target.value)}
           />
-          <button className="px-4 py-2 rounded-xl bg-primary text-white">Verify</button>
+          <button className="px-4 py-2 rounded-xl bg-primary text-headline">Verify</button>
         </form>
       )}
       {err && <p className="text-red-600 mt-3">{err}</p>}
