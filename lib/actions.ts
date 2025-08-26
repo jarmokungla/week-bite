@@ -46,6 +46,59 @@ export async function createRecipe(data: RecipeInput) {
   return recipe;
 }
 
+export async function updateRecipe(recipeId: string, data: RecipeInput) {
+  const user = await requireUser();
+  const supabase = supabaseServer();
+
+  const { error } = await supabase
+    .from('recipes')
+    .update({
+      title: data.title,
+      directions: data.directions ?? null,
+      image_url: data.image_url ?? null,
+      book_id: data.book_id ?? null,
+      tags: data.tags ?? [],
+    })
+    .eq('id', recipeId)
+    .eq('owner_id', user.id);
+  if (error) throw error;
+
+  const { error: delErr } = await supabase
+    .from('recipe_ingredients')
+    .delete()
+    .eq('recipe_id', recipeId);
+  if (delErr) throw delErr;
+
+  if (data.ingredients?.length) {
+    const rows = data.ingredients.map(i => ({
+      recipe_id: recipeId,
+      name: i.name,
+      quantity: i.quantity ?? null,
+      unit: i.unit ?? null,
+    }));
+    const { error: insErr } = await supabase
+      .from('recipe_ingredients')
+      .insert(rows);
+    if (insErr) throw insErr;
+  }
+
+  revalidatePath('/recipes');
+  revalidatePath(`/recipes/${recipeId}`);
+}
+
+export async function deleteRecipe(recipeId: string) {
+  const user = await requireUser();
+  const supabase = supabaseServer();
+  const { error } = await supabase
+    .from('recipes')
+    .delete()
+    .eq('id', recipeId)
+    .eq('owner_id', user.id);
+  if (error) throw error;
+  revalidatePath('/recipes');
+  revalidatePath(`/recipes/${recipeId}`);
+}
+
 export async function addIngredientsToShoppingList(recipeId: string) {
   const user = await requireUser();
   const supabase = supabaseServer();
