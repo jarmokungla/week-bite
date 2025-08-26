@@ -7,13 +7,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#10B981', // mint
-        primaryDark: '#0F766E', // deep teal
-        accent: '#0EA5E9', // sky
-        bg: '#0B1220', // midnight
-        text: '#ECFEFF', // mint-ice text on dark
-        muted: '#A7F3D0', // mint-ice
+        primary: '#10B981',  // mint
+        primaryDark: '#0F766E',
+        accent: '#38BDF8',  // brighter sky
+        bg: '#0B1220',  // midnight
+        surface: '#0F172A',  // cards/navbar
+        text: '#C7EDE3',  // body on dark
+        headline: '#ECFEFF',  // titles on dark
+        muted: '#94A3B8',  // meta text
         ring: 'rgba(16,185,129,0.25)',
+        success: '#22C55E'
       }
     },
   },
