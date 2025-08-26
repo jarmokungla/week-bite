@@ -1,5 +1,7 @@
 import { supabaseServer } from '@/lib/supabaseServer';
 import { addIngredientsToShoppingList, addRecipeToNextWeekMenu } from '@/lib/actions';
+import EditRecipeModal from '@/components/EditRecipeModal';
+import DeleteRecipeButton from '@/components/DeleteRecipeButton';
 import { weekdayNames } from '@/lib/date';
 import { redirect, notFound } from 'next/navigation';
 
@@ -19,9 +21,14 @@ export default async function RecipePage({ params }: { params: { id: string } })
     .from('recipe_ingredients')
     .select('id, name, quantity, unit')
     .eq('recipe_id', params.id);
+  const recipeForEdit = { ...recipe, ingredients: ingredients ?? [] };
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end gap-2">
+        <EditRecipeModal recipe={recipeForEdit} />
+        <DeleteRecipeButton recipeId={recipe.id} />
+      </div>
       {recipe.image_url && (
         <img
           src={recipe.image_url}

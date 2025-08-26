@@ -1,16 +1,27 @@
 'use client';
 import { useState } from 'react';
 import UploadImage from './UploadImage';
-import { createRecipe } from '@/lib/actions';
+import { createRecipe, updateRecipe } from '@/lib/actions';
 import type { IngredientInput } from '@/lib/types';
 
-export default function RecipeForm({ bookId }: { bookId?: string | null }) {
-  const [title, setTitle] = useState('');
-  const [directions, setDirections] = useState('');
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [ingredients, setIngredients] = useState<IngredientInput[]>([{ name: '' }]);
+type RecipeFormRecipe = {
+  id: string;
+  title: string;
+  directions?: string | null;
+  image_url?: string | null;
+  ingredients: IngredientInput[];
+  book_id?: string | null;
+  tags?: string[];
+};
+
+export default function RecipeForm({ bookId, recipe, onSaved }: { bookId?: string | null; recipe?: RecipeFormRecipe; onSaved?: () => void }) {
+  const [title, setTitle] = useState(recipe?.title ?? '');
+  const [directions, setDirections] = useState(recipe?.directions ?? '');
+  const [imageUrl, setImageUrl] = useState<string | null>(recipe?.image_url ?? null);
+  const [ingredients, setIngredients] = useState<IngredientInput[]>(recipe?.ingredients?.length ? recipe.ingredients : [{ name: '' }]);
   const [tagInput, setTagInput] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(recipe?.tags ?? []);
+  const isEdit = !!recipe;
 
   function updateIng(i: number, key: keyof IngredientInput, value: string) {
     setIngredients(prev => prev.map((ing, idx) => idx === i ? { ...ing, [key]: value } : ing));
@@ -28,13 +39,18 @@ export default function RecipeForm({ bookId }: { bookId?: string | null }) {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const cleaned = ingredients.filter(i => i.name.trim().length);
-    await createRecipe({ title, directions, image_url: imageUrl, ingredients: cleaned, book_id: bookId ?? null, tags });
-    setTitle(''); setDirections(''); setImageUrl(null); setIngredients([{ name: '' }]); setTags([]);
+    if (isEdit && recipe) {
+      await updateRecipe(recipe.id, { title, directions, image_url: imageUrl, ingredients: cleaned, book_id: bookId ?? recipe.book_id ?? null, tags });
+    } else {
+      await createRecipe({ title, directions, image_url: imageUrl, ingredients: cleaned, book_id: bookId ?? null, tags });
+      setTitle(''); setDirections(''); setImageUrl(null); setIngredients([{ name: '' }]); setTags([]);
+    }
+    onSaved && onSaved();
   }
 
     return (
       <form onSubmit={onSubmit} className="p-4 border border-primary/25 bg-surface rounded-2xl space-y-3">
-        <h3 className="font-medium text-headline">New Recipe</h3>
+        <h3 className="font-medium text-headline">{isEdit ? 'Edit Recipe' : 'New Recipe'}</h3>
         <input className="w-full border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} required />
         <textarea className="w-full border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="Directions" rows={4} value={directions} onChange={e => setDirections(e.target.value)} />
         <div className="flex items-center gap-3">
