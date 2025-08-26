@@ -31,13 +31,13 @@ export default async function ShoppingPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Shopping List</h1>
+      <h1 className="text-xl font-semibold text-headline">Shopping List</h1>
       <div className="space-y-2">
         {items && items.length === 0 && <p className="text-muted">No items yet — add some from a recipe.</p>}
         {items && items.map(i => (
-          <form key={i.id} action={toggleShoppingItem.bind(null, i.id, !i.checked)} className="flex items-center gap-3 border rounded-xl px-3 py-2">
-            <button className={"h-5 w-5 rounded border " + (i.checked ? "bg-primary" : "bg-white")} aria-label="toggle" />
-            <div className={"flex-1 " + (i.checked ? "line-through text-muted" : "")}>
+          <form key={i.id} action={toggleShoppingItem.bind(null, i.id, !i.checked)} className="flex items-center gap-3 border border-primary/25 bg-surface rounded-xl px-3 py-2">
+            <button className={"h-5 w-5 rounded border border-primary/25 " + (i.checked ? "bg-primary" : "bg-surface") } aria-label="toggle" />
+            <div className={"flex-1 " + (i.checked ? "line-through text-muted" : "text-headline")}> 
               {i.name} {i.quantity ? `— ${i.quantity} ${i.unit ?? ''}` : ''}
             </div>
           </form>

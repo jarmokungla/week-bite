@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { supabaseBrowser } from '@/lib/supabaseBrowser';
-import { v4 as uuidv4 } from 'uuid';
 
 // simple local uuid implementation if uuid is not installed
 function simpleId() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
@@ -24,7 +23,7 @@ export default function UploadImage({ onUploaded }:{ onUploaded:(url:string)=>vo
   }
   return (
     <label className="inline-flex items-center gap-2 cursor-pointer">
-      <span className="px-3 py-2 border rounded-xl">{uploading ? 'Uploading...' : 'Upload image'}</span>
+      <span className="px-3 py-2 border border-primary/25 bg-surface rounded-xl">{uploading ? 'Uploading...' : 'Upload image'}</span>
       <input type="file" className="hidden" onChange={onFileChange} accept="image/*" />
     </label>
   )
