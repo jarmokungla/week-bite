@@ -10,6 +10,7 @@ export type RecipeInput = {
   image_url?: string | null;
   ingredients: IngredientInput[];
   book_id?: string | null;
+  tags?: string[];
 };
 
 export type Weekday =

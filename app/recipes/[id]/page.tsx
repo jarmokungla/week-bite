@@ -30,6 +30,13 @@ export default async function RecipePage({ params }: { params: { id: string } })
         />
       )}
       <h1 className="text-xl font-semibold text-headline">{recipe.title}</h1>
+      {recipe.tags && recipe.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {recipe.tags.map((t: string) => (
+            <span key={t} className="text-xs px-2 py-0.5 bg-primary/10 rounded-full text-headline">{t}</span>
+          ))}
+        </div>
+      )}
       {ingredients && ingredients.length > 0 && (
         <div>
           <h2 className="font-medium text-headline mb-1">Ingredients</h2>

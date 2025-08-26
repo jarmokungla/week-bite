@@ -9,6 +9,8 @@ export default function RecipeForm({ bookId }: { bookId?: string | null }) {
   const [directions, setDirections] = useState('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [ingredients, setIngredients] = useState<IngredientInput[]>([{ name: '' }]);
+  const [tagInput, setTagInput] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
 
   function updateIng(i: number, key: keyof IngredientInput, value: string) {
     setIngredients(prev => prev.map((ing, idx) => idx === i ? { ...ing, [key]: value } : ing));
@@ -16,11 +18,18 @@ export default function RecipeForm({ bookId }: { bookId?: string | null }) {
   function addIng() { setIngredients(prev => [...prev, { name: '' }]); }
   function removeIng(i: number) { setIngredients(prev => prev.filter((_, idx) => idx !== i)); }
 
+  function addTag() {
+    const t = tagInput.trim();
+    if (t && !tags.includes(t)) setTags(prev => [...prev, t]);
+    setTagInput('');
+  }
+  function removeTag(t: string) { setTags(prev => prev.filter(tag => tag !== t)); }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const cleaned = ingredients.filter(i => i.name.trim().length);
-    await createRecipe({ title, directions, image_url: imageUrl, ingredients: cleaned, book_id: bookId ?? null });
-    setTitle(''); setDirections(''); setImageUrl(null); setIngredients([{ name: '' }]);
+    await createRecipe({ title, directions, image_url: imageUrl, ingredients: cleaned, book_id: bookId ?? null, tags });
+    setTitle(''); setDirections(''); setImageUrl(null); setIngredients([{ name: '' }]); setTags([]);
   }
 
     return (
@@ -44,6 +53,21 @@ export default function RecipeForm({ bookId }: { bookId?: string | null }) {
               </div>
             ))}
             <button type="button" onClick={addIng} className="text-sm text-primary">+ Add ingredient</button>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm font-medium mb-1 text-headline">Tags</p>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {tags.map(t => (
+              <span key={t} className="px-2 py-1 text-sm rounded-xl bg-primary/10 text-headline flex items-center gap-1">
+                {t}
+                <button type="button" onClick={() => removeTag(t)} className="text-red-600">✕</button>
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <input className="flex-1 border border-primary/25 rounded-xl px-3 py-2 bg-surface" placeholder="New tag" value={tagInput} onChange={e => setTagInput(e.target.value)} />
+            <button type="button" onClick={addTag} className="px-3 py-2 border border-primary/25 rounded-xl bg-surface">Add</button>
           </div>
         </div>
         <button className="px-4 py-2 rounded-xl bg-primary text-headline">Save Recipe</button>
