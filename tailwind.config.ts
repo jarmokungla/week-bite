@@ -7,15 +7,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#10B981',  // mint
-        primaryDark: '#0F766E',
-        accent: '#38BDF8',  // brighter sky
-        bg: '#0B1220',  // midnight
-        surface: '#0F172A',  // cards/navbar
-        text: '#C7EDE3',  // body on dark
-        headline: '#ECFEFF',  // titles on dark
-        muted: '#94A3B8',  // meta text
-        ring: 'rgba(16,185,129,0.25)',
+        primary: '#2563eb',
+        primaryDark: '#1e40af',
+        accent: '#f59e0b',
+        bg: '#1c1c1e',
+        surface: '#ffffff',
+        text: '#e5e7eb',
+        headline: '#111827',
+        muted: '#6b7280',
+        ring: 'rgba(37,99,235,0.25)',
         success: '#22C55E'
       }
     },
